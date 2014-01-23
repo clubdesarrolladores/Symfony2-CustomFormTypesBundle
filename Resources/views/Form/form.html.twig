@@ -1,0 +1,109 @@
+{% block tree_row %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {% if help is defined %}<p class="help-block">{{ help|trans }}</p>{% endif %}
+        {{ block('tree_widget') }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock tree_row %}
+            
+{# custom form type - extends entity form type. Use to render closure tree checkboxes #}
+{# @todo: remove related-category class out of here #}
+{% block tree_widget %}
+    {% spaceless %}
+        {% if expanded %}
+            <ul {{ block('widget_container_attributes') }} class="related-category field-box-set tree-list {% if errors|length > 0 %} form-error{% endif %}">
+                
+            {% for child in form %}
+                <li>
+                    {% set entity = form.vars.choices[child.vars.value].data %}
+                        
+                    {{ _self.tree_widget_recursion(entity, form) }}                        
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            {{ block('choice_widget') }}
+        {% endif %}
+    {% endspaceless %}             
+{% endblock tree_widget %}
+   
+{% macro tree_widget_recursion(entity, form) %}
+            
+            {#
+                Remove editing category from related_categories list
+                
+                This category removed in CategoryUpdateType from fetching query, but during rendering tree
+                it's maybe found as child for another category and error will occur. That's why we must
+                skip this category on render tree step
+            #}
+            {% if form.vars.choices[entity.id].data is defined %}
+                {{ form_widget(form[entity.id], {'attr': {'data-slug': entity.slug, 'class': 'tree-checkbox'}, 'label_attr': {'class': 'tree-label'}}) }}
+            {% endif %}
+                
+            {% if entity.children %}
+            <ul class="tree-node">
+                {% for child in entity.children %}                    
+                    <li>
+                        {{ _self.tree_widget_recursion(child, form) }}
+                    </li>                    
+                {% endfor %}
+            </ul>
+             {% endif %}
+            
+{% endmacro %}
+
+{# option tag - render data-slug = entity.slug for entity choices which have a slug #}            
+{% block choice_widget_options %}
+{% spaceless %}
+    {% for group_label, choice in options %}
+        {% if choice is iterable %}
+
+            <optgroup label="{{ group_label|trans }}">
+                {% set options = choice %}
+                {{ block('choice_widget_options') }}
+            </optgroup>
+            
+        {% else %}
+            <option {% if choice.data.slug is defined %}data-slug="{{ choice.data.slug }}"{% endif %} value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans }}</option>
+        {% endif %}
+    {% endfor %}
+{% endspaceless %}
+{% endblock choice_widget_options %}
+            
+{% block recaptcha_widget %}
+{% spaceless %}
+    <div class="form-group">
+    <script type="text/javascript">
+        var RecaptchaOptions = {{ widget_options|default({})|json_encode|raw }};
+    </script>
+
+    <script type="text/javascript" src="//www.google.com/recaptcha/api/challenge?k={{ public_key }}"></script>
+    <noscript>
+        <iframe src="//www.google.com/recaptcha/api/noscript?k={{ public_key }}" height="300" width="500" frameborder="0"></iframe>
+        {{ form_widget(form.recaptcha_challenge_field) }}
+        {{ form_widget(form.recaptcha_response_field) }}
+    </noscript>
+    </div>
+{% endspaceless %}
+{% endblock recaptcha_widget %}
+            
+{% block web_url_widget %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    <input class="form-control {% if attr.class is defined %} {{ attr.class }}{% endif %}" type="{{ type }}" {{ block('widget_attributes') }} value="{% if value is not empty %}{{ value }}{% else %}{{ 'http://' }}{% endif %}"/>
+{% endspaceless %}
+{% endblock web_url_widget %}
+
+{% block phone_number_widget %}
+{% spaceless %}
+    
+    <div class="input-group{% if errors|length > 0 %} form-error{% endif %}">
+        <span class="input-group-addon">
+          {{ form_widget(form.code) }}
+        </span>
+        {{ form_widget(form.phone) }}
+    </div>
+    {{ form_errors(form.phone) }}
+{% endspaceless %}
+{% endblock %}

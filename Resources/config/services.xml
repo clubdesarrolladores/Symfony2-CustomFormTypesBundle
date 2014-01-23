@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    
+    
+    <parameters>
+        <parameter key="umbrellaweb_bundle_custom_form_types.form.core.type.tree.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\TreeEntityType</parameter>
+        <parameter key="umbrellaweb_bundle_custom_form_types.form.core.type.weburl.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\WebUrlType</parameter>
+        <parameter key="umbrellaweb_bundle_custom_form_types.form.core.type.usstates.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\USStatesType</parameter>
+        <parameter key="umbrellaweb_bundle_custom_form_types.form.core.type.hidden_entity.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\HiddenEntityType</parameter>
+        <parameter key="umbrellaweb_bundle_custom_form_types.form.core.type.year.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\YearType</parameter>
+        <parameter key="umbrellaweb_bundle_custom_form_types.form.core.type.wysiwyg.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\WysiwygType</parameter>
+        <parameter key="umbrellaweb_bundle_custom_form_types.form.core.type.phone_number.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\PhoneNumberType</parameter>
+        <parameter key="umbrellaweb_bundle_custom_form_types.form.core.type.recaptcha.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\ReCaptchaType</parameter>
+        <parameter key="umbrellaweb_bundle_custom_form_types.service.recaptcha.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Service\ReCaptcha</parameter>
+        <parameter key="umbrellaweb.form.type.datepicker.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type\DatepickerType</parameter>
+        <parameter key="umbrellaweb.form.extension.help.class">Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Extension\FormTypeHelpExtension</parameter>
+    </parameters>
+
+    <services>
+        <service id="umbrellaweb_bundle_custom_form_types.form.core.type.tree" class="%umbrellaweb_bundle_custom_form_types.form.core.type.tree.class%">
+            <tag name="form.type" alias="tree" />
+        </service>
+        
+        <service id="umbrellaweb_bundle_custom_form_types.form.core.type.weburl" class="%umbrellaweb_bundle_custom_form_types.form.core.type.weburl.class%">
+            <tag name="form.type" alias="web_url"/>
+        </service>
+        
+        <service id="umbrellaweb_bundle_custom_form_types.form.core.type.usstates" class="%umbrellaweb_bundle_custom_form_types.form.core.type.usstates.class%">
+            <tag name="form.type" alias="us_states" />
+        </service>
+        
+        <service id="umbrellaweb_bundle_custom_form_types.form.core.type.hidden_entity" class="%umbrellaweb_bundle_custom_form_types.form.core.type.hidden_entity.class%">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <tag name="form.type" alias="hidden_entity"/>
+        </service>
+        
+        <service id="umbrellaweb_bundle_custom_form_types.form.core.type.year" class="%umbrellaweb_bundle_custom_form_types.form.core.type.year.class%">
+            <tag name="form.type" alias="year"/>
+        </service>
+        
+        <service id="umbrellaweb_bundle_custom_form_types.form.core.type.wysiwyg" class="%umbrellaweb_bundle_custom_form_types.form.core.type.wysiwyg.class%">
+            <argument type="service" id="umbrellaweb_bundle_custom_form_types.form.transformer.html_purifier" />
+            <tag name="form.type" alias="wysiwyg"/>
+        </service>
+        
+        <service id="umbrellaweb_bundle_custom_form_types.form.transformer.html_purifier" class="Exercise\HTMLPurifierBundle\Form\HTMLPurifierTransformer">
+            <argument type="service" id="exercise_html_purifier.default" />
+        </service>
+        
+        <service id="umbrellaweb_bundle_custom_form_types.form.core.type.phone_number" class="%umbrellaweb_bundle_custom_form_types.form.core.type.phone_number.class%">
+            <tag name="form.type" alias="phone_number"/>
+        </service>
+        
+        <service id="umbrellaweb_bundle_custom_form_types.service.recaptcha" class="%umbrellaweb_bundle_custom_form_types.service.recaptcha.class%" scope="request">
+            <argument type="service" id="request" />
+            <argument />
+        </service>
+
+        <service id="umbrellaweb_bundle_custom_form_types.form.core.type.recaptcha" class="%umbrellaweb_bundle_custom_form_types.form.core.type.recaptcha.class%" scope="request">
+            <tag name="form.type" alias="recaptcha" />
+            <argument type="service" id="umbrellaweb_bundle_custom_form_types.service.recaptcha" />
+            <argument />
+        </service>
+        
+        <service id="umbrellaweb.form.type.datepicker" class="%umbrellaweb.form.type.datepicker.class%">
+            <tag name="form.type" alias="datepicker" />
+        </service>
+        
+        <service id="umbrellaweb.form.extension.help" class="%umbrellaweb.form.extension.help.class%">
+            <tag name="form.type_extension" alias="form" />
+        </service>
+    </services>
+    
+</container>
