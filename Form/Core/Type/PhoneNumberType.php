@@ -7,10 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\DataTransformer\PhoneNumberTransformer;
-use Umbrellaweb\Bundle\CustomFormTypesBundle\Service\PhoneCodesService;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
-
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Yaml\Yaml;
 /**
  * Phone Number Type
  * 
@@ -18,6 +18,13 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class PhoneNumberType extends AbstractType
 {
+    private $container;
+
+    public function __construct(\Symfony\Component\DependencyInjection\Container $container)
+    {
+        $this->container = $container;
+    }
+
     public function getParent()
     {
         return 'form';
@@ -32,7 +39,7 @@ class PhoneNumberType extends AbstractType
     {
         $builder
                 ->add('code', 'choice', array(
-                    'choices' => PhoneCodesService::getPhoneCodes(),
+                    'choices' => $this->getPhoneCodes(),
                     'empty_value' => false,
                     'invalid_message' => 'The entered phone code is not valid.',
                     'preferred_choices' => array('+1'),
@@ -55,5 +62,23 @@ class PhoneNumberType extends AbstractType
                 new Regex(array('pattern' => "/^\+\d{1,4}\s\d{0,11}$/"))
             )
         ));
+    }
+
+    /**
+     * Get list of phone codes for choice list
+     */
+    protected function getPhoneCodes()
+    {
+        // get current locale if null
+        $locale = \Locale::getDefault();
+        
+        // load file with list of phone codes
+        $locator = new FileLocator(__DIR__.'/../Resources/data/phone_codes');
+        $codes_file = $locator->locate('codes.'.$locale.'.yml');
+        
+        // parse yaml file to array
+        $codes = Yaml::parse(file_get_contents($codes_file));
+
+        return $codes;
     }
 }
