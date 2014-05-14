@@ -45,7 +45,7 @@ class USStatesType extends AbstractType
         $locale = \Locale::getDefault();
         
         // load file with list of states
-        $locator = new FileLocator($this->get('kernel')->locateResource("@CustomFormTypesBundle/Resources/data/states"));
+        $locator = new FileLocator($container->getService('kernel')->locateResource("@CustomFormTypesBundle/Resources/data/states"));
         $country_file = $locator->locate('us_states.'.$locale.'.yml');
         
         // parse yaml file to array
