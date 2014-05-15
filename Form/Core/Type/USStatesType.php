@@ -10,6 +10,13 @@ use Symfony\Component\Yaml\Yaml;
 
 class USStatesType extends AbstractType
 {
+    private $container;
+
+    public function __construct(\Symfony\Component\DependencyInjection\Container $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -45,7 +52,7 @@ class USStatesType extends AbstractType
         $locale = \Locale::getDefault();
         
         // load file with list of states
-        $locator = new FileLocator($this->container->getService('kernel')->locateResource("@CustomFormTypesBundle/Resources/data/states"));
+        $locator = new FileLocator($this->container->get('kernel')->locateResource("@UmbrellawebBundleCustomFormTypesBundle/Resources/data/states"));
         $country_file = $locator->locate('us_states.'.$locale.'.yml');
         
         // parse yaml file to array

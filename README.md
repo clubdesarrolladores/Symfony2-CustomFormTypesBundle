@@ -53,4 +53,4 @@ If field value is null, rendered 'http://' placeholder
 
 register the Bundle UmbrellawebCustomFormTypesBundle in app/AppKernel.php:
 
-    new Umbrellaweb\Bundle\CustomFormTypesBundle\UmbrellawebCustomFormTypesBundle(),
+    new Umbrellaweb\Bundle\CustomFormTypesBundle\UmbrellawebBundleCustomFormTypesBundle(),

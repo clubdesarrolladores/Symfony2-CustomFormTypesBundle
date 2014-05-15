@@ -73,7 +73,7 @@ class PhoneNumberType extends AbstractType
         $locale = \Locale::getDefault();
         
         // load file with list of phone codes
-        $locator = new FileLocator($this->container->getService('kernel')->locateResource("@CustomFormTypesBundle/Resources/data/phone_codes"));
+        $locator = new FileLocator($this->container->get('kernel')->locateResource("@UmbrellawebBundleCustomFormTypesBundle/Resources/data/phone_codes"));
         $codes_file = $locator->locate('codes.'.$locale.'.yml');
         
         // parse yaml file to array
