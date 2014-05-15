@@ -3,7 +3,6 @@
 namespace Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\EventListener\WebUrlListener;

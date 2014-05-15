@@ -29,12 +29,12 @@ class ClosureTreeTransformer implements DataTransformerInterface
 
         foreach ($value as $one)
         {
-            $this->_iterate($one);
+            $this->iterate($one);
         }
         return $this->_reversedValue;
     }
 
-    protected function _iterate($entity)
+    protected function iterate($entity)
     {
         if (!in_array($entity->getId(), $this->_usedIds))
         {
@@ -47,7 +47,7 @@ class ClosureTreeTransformer implements DataTransformerInterface
         
         foreach($entity->getChildren() as $child)
         {
-            $this->_iterate($child);
+            $this->iterate($child);
         }
         
         return;

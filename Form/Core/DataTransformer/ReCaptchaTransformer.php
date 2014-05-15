@@ -2,7 +2,6 @@
 
 namespace Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\DataTransformer;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\DataTransformerInterface;
 

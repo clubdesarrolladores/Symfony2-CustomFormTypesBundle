@@ -4,11 +4,19 @@ namespace Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 use Umbrellaweb\Bundle\CustomFormTypesBundle\Service\USStatesService;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Yaml\Yaml;
 
 class USStatesType extends AbstractType
 {
+    private $container;
+
+    public function __construct(\Symfony\Component\DependencyInjection\Container $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -31,7 +39,25 @@ class USStatesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'choices' => USStatesService::getUSStates()
+            'choices' => $this->getUSStates()
         ));
+    }
+
+    /**
+     * Get list of US states for choice list
+     */
+    protected function getUSStates()
+    {
+        // get current locale if null
+        $locale = \Locale::getDefault();
+        
+        // load file with list of states
+        $locator = new FileLocator($this->container->get('kernel')->locateResource("@UmbrellawebBundleCustomFormTypesBundle/Resources/data/states"));
+        $country_file = $locator->locate('us_states.'.$locale.'.yml');
+        
+        // parse yaml file to array
+        $countries = Yaml::parse(file_get_contents($country_file));
+
+        return $countries;
     }
 }

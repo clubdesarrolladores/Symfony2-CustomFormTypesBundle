@@ -7,7 +7,6 @@ use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\HttpFoundation\Request;
 
 use Umbrellaweb\Bundle\CustomFormTypesBundle\Service\ReCaptcha;
 use Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\DataTransformer\ReCaptchaTransformer;

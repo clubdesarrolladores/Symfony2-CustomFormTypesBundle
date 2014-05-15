@@ -3,7 +3,6 @@
 namespace Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -15,12 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class FormTypeHelpExtension extends AbstractTypeExtension
 {
-
-//    public function buildForm(FormBuilderInterface $builder, array $options)
-//    {
-//        if($options['help'])
-//            $builder->setAttribute('help', $options['help']);
-//    }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
