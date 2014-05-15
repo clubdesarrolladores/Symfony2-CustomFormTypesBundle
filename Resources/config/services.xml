@@ -29,7 +29,7 @@
         </service>
         
         <service id="umbrellaweb_bundle_custom_form_types.form.core.type.usstates" class="%umbrellaweb_bundle_custom_form_types.form.core.type.usstates.class%">
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="kernel"/>
             <tag name="form.type" alias="us_states" />
         </service>
         
@@ -52,7 +52,7 @@
         </service>
         
         <service id="umbrellaweb_bundle_custom_form_types.form.core.type.phone_number" class="%umbrellaweb_bundle_custom_form_types.form.core.type.phone_number.class%">
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="kernel"/>
             <tag name="form.type" alias="phone_number"/>
         </service>
         

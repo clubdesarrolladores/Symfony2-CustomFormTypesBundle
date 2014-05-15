@@ -20,11 +20,11 @@ use Symfony\Component\Yaml\Yaml;
  */
 class PhoneNumberType extends AbstractType
 {
-    private $container;
+    private $kernel;
 
-    public function __construct(\Symfony\Component\DependencyInjection\Container $container)
+    public function __construct(\Symfony\Component\HttpKernel\Kernel $kernel)
     {
-        $this->container = $container;
+        $this->kernel = $kernel;
     }
 
     public function getParent()
@@ -75,7 +75,7 @@ class PhoneNumberType extends AbstractType
         $locale = \Locale::getDefault();
         
         // load file with list of phone codes
-        $locator = new FileLocator($this->container->get('kernel')->locateResource("@UmbrellawebBundleCustomFormTypesBundle/Resources/data/phone_codes"));
+        $locator = new FileLocator($this->kernel->locateResource("@UmbrellawebBundleCustomFormTypesBundle/Resources/data/phone_codes"));
         $codes_file = $locator->locate('codes.'.$locale.'.yml');
         
         // parse yaml file to array
