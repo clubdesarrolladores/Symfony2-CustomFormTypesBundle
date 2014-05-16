@@ -1,6 +1,8 @@
 UmbrellawebCustomFormTypesBundle
 ========================
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f6e73104-0e86-42df-9907-951c2f0f92e9/big.png)](https://insight.sensiolabs.com/projects/f6e73104-0e86-42df-9907-951c2f0f92e9)
+
 # OVERVIEW
 
 **UmbrellawebCustomFormTypesBundle** - extends the default Symfony 2 form types & customizes some form templates rendering.
