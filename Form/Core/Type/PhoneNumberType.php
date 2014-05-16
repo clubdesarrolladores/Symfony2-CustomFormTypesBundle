@@ -7,7 +7,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\DataTransformer\PhoneNumberTransformer;
-use Umbrellaweb\Bundle\CustomFormTypesBundle\Service\PhoneCodesService;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Config\FileLocator;

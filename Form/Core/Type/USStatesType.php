@@ -4,7 +4,6 @@ namespace Umbrellaweb\Bundle\CustomFormTypesBundle\Form\Core\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Umbrellaweb\Bundle\CustomFormTypesBundle\Service\USStatesService;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
 
